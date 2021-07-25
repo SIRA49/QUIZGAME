@@ -1,6 +1,10 @@
 enchant();
 var lock    = false;
 var doorsound =false;
+/*Q1,Q2,Q3は、○か×を保持する変数。　
+	aとbは、ゲームの進行に必用な変数。　
+		re1,re2,re3は、正解か不正解かを保持する変数。
+			scoreは、得点を保持する変数。*/
 var Q1=0,Q2=0,Q3=0,a=0,b=0,re1,re2,re3,score=0;
 
 //クイズの問題を配列に入れている。
@@ -22,7 +26,7 @@ var PLAYER          = "player.gif";
 var BIGDOOR         = "adaa.gif";
 var DOOR            = "自動ドアが開く.mp3";
 
-//各部品をASSETSにまとめている。
+//上記の各部品をASSETSにまとめている。
 var ASSETS = [
     DOOR,textfiled,MAP,PLAYER,BIGDOOR,TEXT
 ];
@@ -161,7 +165,7 @@ window.onload = function() {
                 }
             }
         };
-
+	//グループ化を行い、各部品の追加。
         stage = new Group();
         stage.addChild(map);	
         stage.addChild(door);
@@ -189,7 +193,7 @@ window.onload = function() {
             stage.y = y;
         };
 
-		//addEventListenerで様々処理を行う
+		//addEventListenerで様々な処理を行う。（ゲーム中に処理を行うために必用）
 		player.addEventListener(Event.ENTER_FRAME, function(){　
 		
 			//プレイヤーがsignに触れたときの処理
@@ -210,7 +214,7 @@ window.onload = function() {
 			}
 		
 		//プレイヤーがsign1に触れたときの処理
-		if (player.intersect(sign1)){
+			if (player.intersect(sign1)){
 			if(lock==false){
 			myLabel.text = "黄色の感圧版を踏んで、問題を見てください!!!";
 			}else if(lock==true){
@@ -240,8 +244,8 @@ window.onload = function() {
 				}
 			}
 
-	//スプライトの画像を更新するために必用
-	door.onenterframe = function(){
+		//スプライトの画像を更新するために必用
+		door.onenterframe = function(){
 		//プレイヤーがbuttonredに触れたときの処理
 		if (player.intersect(buttonred)){
 			if((Q1==1||Q1==2)&&a==0){
@@ -291,6 +295,7 @@ window.onload = function() {
 		if (player.intersect(door)){
 
 			if(a==1){
+				//setupStageに、引数を渡す。
 				setupStage(1);
 				 player.x = 16*10;
        				 player.y = 12 * 16 + 8;
@@ -311,6 +316,7 @@ window.onload = function() {
 			      }
 					
 					if(a==3){
+						//setupStageに、引数を渡す。
 						setupStage(2);
 						player.x = 16*10;
       						  player.y = 12 * 16 + 8;
@@ -330,6 +336,7 @@ window.onload = function() {
 				     	      }
 
 							if(a==5){
+								//setupStageに、引数を渡す。
 								setupStage(3);
 								player.x = 16*10;
       								  player.y = 12 * 16 + 8;
@@ -353,6 +360,7 @@ window.onload = function() {
 								var result= score.toString();
 				     	     		       }
 									if(a==7){
+									//gameOverに、引数を渡す。
 									gameOver(re1,re2,re3,score, "クイズ終了!!");		
 									}
 		}
@@ -373,6 +381,7 @@ var gameOver = function(re1,re2,re3,score, rst) {
 
 //マップのデータを４マップ分、格納している
 var setupStage = function(stageIndex)  
+{ 
     var stage=stageIndex;
     
 	if(stage==0){ //stage1
